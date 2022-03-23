@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
@@ -32,32 +33,15 @@ public class Main {
         System.out.println(list2.size());
 
         Stream<Person> personStream = people.stream();
-        List<String> listWorkMan =
+        Collection<String> workPeople =
                 personStream
-                        .filter(person -> person.getAge() >= 18 && person.getAge() <= 65)
-                        .filter(person -> person.getSex().equals(Sex.MAN))
+                        .filter(person -> person.getAge() >= 18)
                         .filter(person -> person.getEducation().equals(Education.HIGHER))
-                        .map(Person::getName)
-                        .toList();
+                        .filter(person -> person.getSex().equals(Sex.MAN) ? person.getAge() <= 65 : person.getAge() <= 60)
+                        .map(Person::getName).toList();
 
-        Stream<Person> personStream1 = people.stream();
-        List<String> listWorkWomen =
-                personStream1
-                        .filter(person -> person.getAge() >= 18 && person.getAge() <= 60)
-                        .filter(person -> person.getSex().equals(Sex.WOMAN))
-                        .filter(person -> person.getEducation().equals(Education.HIGHER))
-                        .map(Person::getName)
-                        .toList();
-
-        List<String> workPeople = new ArrayList<>();
-        workPeople.addAll(listWorkMan);
-        workPeople.addAll(listWorkWomen);
         System.out.println(workPeople.size());
-
-
     }
-
-
 }
 
 
